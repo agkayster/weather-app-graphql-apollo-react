@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import Home from './Pages/Home';
+import {
+	ApolloClient,
+	InMemoryCache,
+	ApolloProvider,
+	// HttpLink,// not needed since we are dealing with public API//
+} from '@apollo/client';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	const client = new ApolloClient({
+		cache: new InMemoryCache(),
+		// uri points to the public API url we would be fetching our data from//
+		uri: 'https://graphql-weather-api.herokuapp.com/',
+	});
+
+	return (
+		<ApolloProvider client={client}>
+			<div>
+				<Home />
+			</div>
+		</ApolloProvider>
+	);
 }
 
 export default App;
